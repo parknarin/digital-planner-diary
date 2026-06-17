@@ -17,6 +17,12 @@ if 'db' not in st.session_state:
         "custom": []       # 사용자가 만든 커스텀 기록들
     }
 
+# 만약 입력한 아이디가 장부에 있고 '그리고' 비밀번호까지 장부와 똑같다면?
+if user_id in st.session_state.db["users"] and st.session_state.db["users"][user_id] == user_pw:
+    st.success("로그인 성공!") # 통과!
+else:
+    st.error("❌ 아이디 또는 비밀번호가 틀렸습니다.") # 하나라도 다르면 차단!
+
 if 'login_status' not in st.session_state:
     st.session_state.login_status = False
 if 'current_user' not in st.session_state:
