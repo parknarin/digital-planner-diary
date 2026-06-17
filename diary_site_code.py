@@ -79,7 +79,7 @@ else:
         
     st.sidebar.write("---")
     
-    # 📅 [기획 반영] 연/월/일 직접 다이얼 선택 기능
+    # 📅 연/월/일 직접 다이얼 선택 기능
     st.sidebar.subheader("📅 날짜 선택 다이얼")
     c1, c2, c3 = st.sidebar.columns(3)
     with c1: selected_year = st.selectbox("연", [2026, 2027, 2028])
@@ -97,7 +97,7 @@ else:
     if mode == "📅 플래너 모드":
         st.title(f"📅 플래너 모드")
         
-        # --- 🌟 [비주얼 업그레이드] 실시간 월간 달력 및 도장 현황판 ---
+        # --- 실시간 월간 달력 및 도장 현황판 ---
         st.subheader(f"📊 {selected_year}년 {selected_month}월 나의 도장 깨기 현황판")
         
         cal = calendar.monthcalendar(selected_year, selected_month)
@@ -110,7 +110,6 @@ else:
                     row[day_num] = "" 
                 else:
                     check_date = f"{selected_year}-{selected_month:02d}-{actual_day:02d}"
-                    # 💮 해당 날짜의 일정을 다 깼는지 검사해서 달력 표에 도장 찍기
                     if check_date in my_vault["planner"] and len(my_vault["planner"][check_date]) > 0:
                         all_done = all(item["done"] for item in my_vault["planner"][check_date])
                         if all_done:
@@ -164,7 +163,8 @@ else:
             else:
                 st.write("오늘 등록된 일정이 없습니다. 일정을 추가하면 달력과 연동됩니다.")
 
-       with tab2:
+        # 🌟 [자동 이식 구역] 줄 맞춤 에러를 해결한 자동 연동형 뽀모도로 타이머 코드
+        with tab2:
             st.subheader("⏳ 뽀모도로 일체형 타이머 (25분 집중 ➡️ 5분 휴식 자동 연동)")
             st.info("🎯 버튼을 누르면 25분 집중 후 알람이 울리고, 곧바로 5분 휴식이 이어집니다.")
             
@@ -172,14 +172,13 @@ else:
                 # 1단계: 25분 집중 모드 시작
                 st.markdown("### ✍️ 1단계: 집중 모드 (25분)")
                 focus_bar = st.progress(0)
-                focus_duration = 25 * 60  # 25분을 초로 환산
+                focus_duration = 25 * 60  # 실습 테스트용 원본 25분 계산
                 
                 for percent in range(100):
                     time.sleep(focus_duration / 100)
                     focus_bar.progress(percent + 1)
                     
                 st.success("🚨 집중 시간이 끝났습니다! 이제 휴식 시간입니다.")
-                # 집중 끝 알람 (맑은 벨소리)
                 st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
                 
                 st.write("---")
@@ -187,7 +186,7 @@ else:
                 # 2단계: 5분 휴식 모드 자동 전환
                 st.markdown("### ☕ 2단계: 휴식 모드 (5분)")
                 rest_bar = st.progress(0)
-                rest_duration = 5 * 60  # 5분을 초로 환산
+                rest_duration = 5 * 60  
                 
                 for percent in range(100):
                     time.sleep(rest_duration / 100)
@@ -195,23 +194,6 @@ else:
                     
                 st.balloons()
                 st.success("🎉 완벽한 일체형 뽀모도로 싸이클을 달성하셨습니다! 다시 집중하려면 버튼을 누르세요.")
-                # 휴식 끝 알람
-                st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
-                
-                st.write("---")
-                
-                # 2단계: 5분 휴식 모드 자동 전환
-                st.markdown("### ☕ 2단계: 휴식 모드 (5분)")
-                rest_bar = st.progress(0)
-                rest_duration = 5 * 60  # 5분을 초로 환산
-                
-                for percent in range(100):
-                    time.sleep(rest_duration / 100)
-                    rest_bar.progress(percent + 1)
-                    
-                st.balloons()
-                st.success("🎉 완벽한 일체형 뽀모도로 싸이클을 달성하셨습니다! 다시 집중하려면 버튼을 누르세요.")
-                # 휴식 끝 알람
                 st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
 
     # ==================== [다이어리 모드] ====================
