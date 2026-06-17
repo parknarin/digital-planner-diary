@@ -164,16 +164,54 @@ else:
             else:
                 st.write("오늘 등록된 일정이 없습니다. 일정을 추가하면 달력과 연동됩니다.")
 
-        with tab2:
-            st.subheader("⏳ 뽀모도로 타이머 (25분 집중 / 5분 휴식)")
-            timer_mode = st.radio("타이머 선택", ["집중 모드 (25분)", "휴식 모드 (5분)"], horizontal=True)
-            if st.button("타이머 시작"):
-                duration = 25 * 60 if "집중" in timer_mode else 5 * 60
-                progress_bar = st.progress(0)
+       with tab2:
+            st.subheader("⏳ 뽀모도로 일체형 타이머 (25분 집중 ➡️ 5분 휴식 자동 연동)")
+            st.info("🎯 버튼을 누르면 25분 집중 후 알람이 울리고, 곧바로 5분 휴식이 이어집니다.")
+            
+            if st.button("토마토 타이머 가동!", use_container_width=True):
+                # 1단계: 25분 집중 모드 시작
+                st.markdown("### ✍️ 1단계: 집중 모드 (25분)")
+                focus_bar = st.progress(0)
+                focus_duration = 25 * 60  # 25분을 초로 환산
+                
                 for percent in range(100):
-                    time.sleep(duration / 100)
-                    progress_bar.progress(percent + 1)
-                st.success("⏰ 타이머가 종료되었습니다! 알람이 울립니다.")
+                    time.sleep(focus_duration / 100)
+                    focus_bar.progress(percent + 1)
+                    
+                st.success("🚨 집중 시간이 끝났습니다! 이제 휴식 시간입니다.")
+                # 집중 끝 알람 (맑은 벨소리)
+                st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
+                
+                st.write("---")
+                
+                # 2단계: 5분 휴식 모드 자동 전환
+                st.markdown("### ☕ 2단계: 휴식 모드 (5분)")
+                rest_bar = st.progress(0)
+                rest_duration = 5 * 60  # 5분을 초로 환산
+                
+                for percent in range(100):
+                    time.sleep(rest_duration / 100)
+                    rest_bar.progress(percent + 1)
+                    
+                st.balloons()
+                st.success("🎉 완벽한 일체형 뽀모도로 싸이클을 달성하셨습니다! 다시 집중하려면 버튼을 누르세요.")
+                # 휴식 끝 알람
+                st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
+                
+                st.write("---")
+                
+                # 2단계: 5분 휴식 모드 자동 전환
+                st.markdown("### ☕ 2단계: 휴식 모드 (5분)")
+                rest_bar = st.progress(0)
+                rest_duration = 5 * 60  # 5분을 초로 환산
+                
+                for percent in range(100):
+                    time.sleep(rest_duration / 100)
+                    rest_bar.progress(percent + 1)
+                    
+                st.balloons()
+                st.success("🎉 완벽한 일체형 뽀모도로 싸이클을 달성하셨습니다! 다시 집중하려면 버튼을 누르세요.")
+                # 휴식 끝 알람
                 st.audio("https://actions.google.com/sounds/v1/alarms/digital_watch_alarm_long.ogg", format="audio/ogg", autoplay=True)
 
     # ==================== [다이어리 모드] ====================
